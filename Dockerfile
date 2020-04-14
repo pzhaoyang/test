@@ -18,8 +18,8 @@ ENTRYPOINT ["/init"]
 #COPY sources.list /etc/apt/sources.list
 
 # Update and get dependencies
-RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get update
-RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
  apt-utils \
  curl \
  tzdata \
@@ -69,8 +69,8 @@ COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
 RUN dpkg -i /tmp/plexmediaserver.deb
 
 # Cleanup
-RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get -y autoremove && \
-    DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get -y clean && \
+RUN apt-get -y autoremove && \
+    apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* && \
     rm -rf /var/tmp/* \
