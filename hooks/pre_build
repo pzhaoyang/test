@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker run --rm --privileged multiarch/qemu-user-static:register --reset
+#docker run --rm --privileged multiarch/qemu-user-static:register --reset
+export DOCKER_CLI_EXPERIMENTAL=enabled
+docker buildx create --use --name mybuilder

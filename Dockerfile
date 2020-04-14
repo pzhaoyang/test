@@ -1,6 +1,4 @@
-#FROM --platform=linux/armv7 ubuntu:18.04
-FROM multiarch/ubuntu-debootstrap:armhf-bionic
-ARG BUILD_ARCH=armhf
+FROM --platform=linux/armv7 ubuntu:18.04
 
 ARG S6_OVERLAY_VERSION=v1.22.1.0
 ARG ARCH=armhf
@@ -67,8 +65,10 @@ COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 # Save version and install
 #RUN /installBinary.sh
 #RUN axel -n5 -S5 "${PLEX_DOWNLOAD}/${PLEX_RELEASE}/debian/plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb" -o /tmp/plexmediaserver.deb
+FROM multiarch/ubuntu-debootstrap:armhf-bionic AS install
+
 COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
-RUN uname -a
+RUN  uname -a
 #RUN ls -l plexmediaserver_1.19.1.2645-ccb6eb67e_armhf.deb /tmp/plexmediaserver.deb
 RUN dpkg -i --force-confold /tmp/plexmediaserver.deb
 
