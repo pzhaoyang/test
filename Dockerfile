@@ -66,6 +66,7 @@ COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 #RUN /installBinary.sh
 #RUN axel -n5 -S5 "${PLEX_DOWNLOAD}/${PLEX_RELEASE}/debian/plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb" -o /tmp/plexmediaserver.deb
 COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
+RUN uname -a
 #RUN ls -l plexmediaserver_1.19.1.2645-ccb6eb67e_armhf.deb /tmp/plexmediaserver.deb
 RUN dpkg -i --force-confold /tmp/plexmediaserver.deb
 
