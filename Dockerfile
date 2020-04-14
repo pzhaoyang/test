@@ -66,7 +66,8 @@ COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 #RUN /installBinary.sh
 #RUN axel -n5 -S5 "${PLEX_DOWNLOAD}/${PLEX_RELEASE}/debian/plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb" -o /tmp/plexmediaserver.deb
 COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
-RUN dpkg -i /tmp/plexmediaserver.deb
+RUN ls -l *.deb /tmp/*.deb
+RUN dpkg -i --force-confold /tmp/plexmediaserver.deb
 
 # Cleanup
 RUN apt-get -y autoremove && \
