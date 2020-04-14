@@ -24,8 +24,10 @@ RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get install -y \
  curl \
  tzdata \
  axel \
+ xmlstarlet \
  uuid-runtime \
  jq \
+ unrar \
  --fix-missing --fix-broken
 
 # Fetch and extract S6 overlay
@@ -53,7 +55,12 @@ ENV CHANGE_CONFIG_DIR_OWNERSHIP="true" \
 ARG TAG=beta
 ARG URL=
 
-COPY root/ /
+#COPY root/ /
+COPY root/plex-common.sh /plex-common.sh
+COPY root/healthcheck.sh /healthcheck.sh
+COPY root/etc/cont-init.d/40-plex-first-run /etc/cont-init.d/40-plex-first-run
+COPY root/etc/cont-init.d/45-plex-hw-transcode-and-connected-tuner /etc/cont-init.d/45-plex-hw-transcode-and-connected-tuner
+COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 
 # Save version and install
 #RUN /installBinary.sh
@@ -67,7 +74,7 @@ RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* && \
     rm -rf /var/tmp/* \
-	rm -rf /etc/default/plexmediaserver
+    rm -rf /etc/default/plexmediaserver
 
 
 HEALTHCHECK --interval=5s --timeout=2s --retries=20 CMD /healthcheck.sh || exit 1
