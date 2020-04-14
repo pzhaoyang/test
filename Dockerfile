@@ -1,4 +1,4 @@
-FROM ubuntu@3b029ac9aa8eb5dffd43bb7326891cf64f9c228b3960cec55a56605d2ae2ad42
+FROM --platform=linux/armv7 ubuntu:18.04
 
 ARG S6_OVERLAY_VERSION=v1.22.1.0
 ARG ARCH=armhf
