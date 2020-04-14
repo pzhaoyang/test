@@ -15,7 +15,7 @@ ENV TERM="xterm" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 ENTRYPOINT ["/init"]
 
 # Update sources to China
-COPY sources.list /etc/apt/sources.list
+#COPY sources.list /etc/apt/sources.list
 
 # Update and get dependencies
 RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} apt-get update
