@@ -1,4 +1,5 @@
 FROM --platform=linux/armv7 ubuntu:18.04
+COPY qemu-arm-static /usr/bin/
 
 ARG S6_OVERLAY_VERSION=v1.22.1.0
 ARG ARCH=armhf
