@@ -1,4 +1,3 @@
-#FROM --platform=linux/arm/v7 ubuntu:18.04
 FROM ubuntu@sha256:3b029ac9aa8eb5dffd43bb7326891cf64f9c228b3960cec55a56605d2ae2ad42
 
 COPY qemu-arm-static /usr/bin
@@ -6,13 +5,10 @@ COPY qemu-arm-static /usr/bin
 ARG S6_OVERLAY_VERSION=v1.22.1.0
 ARG ARCH=armhf
 ARG PLEX_BUILD=linux-armhf
-ARG PLEX_DISTRO=debian
-##[
+
 ARG S6_OVERLAY_PATH="https://github.com/just-containers/s6-overlay/releases/download"
 ARG PLEX_DOWNLOAD="https://downloads.plex.tv/plex-media-server-new" 
 ARG PLEX_RELEASE=1.19.1.2645-ccb6eb67e
-##]
-ARG DEBIAN_FRONTEND="noninteractive"
 ENV TERM="xterm" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 
 ENTRYPOINT ["/init"]
@@ -30,8 +26,7 @@ RUN apt-get install -y \
  xmlstarlet \
  uuid-runtime \
  jq \
- unrar \
- --fix-missing --fix-broken
+ unrar
 
 # Fetch and extract S6 overlay
 #RUN axel -n 20 -S5 ${S6_OVERLAY_PATH}/${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz -o /tmp/s6-overlay-${ARCH}.tar.gz
@@ -58,21 +53,13 @@ ENV CHANGE_CONFIG_DIR_OWNERSHIP="true" \
 ARG TAG=beta
 ARG URL=
 
-#COPY root/ /
 COPY root/plex-common.sh /plex-common.sh
 COPY root/healthcheck.sh /healthcheck.sh
 COPY root/etc/cont-init.d/40-plex-first-run /etc/cont-init.d/40-plex-first-run
 COPY root/etc/cont-init.d/45-plex-hw-transcode-and-connected-tuner /etc/cont-init.d/45-plex-hw-transcode-and-connected-tuner
 COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 
-# Save version and install
-#RUN /installBinary.sh
-#RUN axel -n5 -S5 "${PLEX_DOWNLOAD}/${PLEX_RELEASE}/debian/plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb" -o /tmp/plexmediaserver.deb
-#FROM multiarch/ubuntu-debootstrap:armhf-bionic AS install
-
 COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
-RUN  uname -a
-#RUN ls -l plexmediaserver_1.19.1.2645-ccb6eb67e_armhf.deb /tmp/plexmediaserver.deb
 RUN dpkg -i --force-confold /tmp/plexmediaserver.deb
 
 # Cleanup
