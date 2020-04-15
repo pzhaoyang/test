@@ -17,7 +17,7 @@ ENV TERM="xterm" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 ENTRYPOINT ["/init"]
 
 # Update sources to China
-#COPY sources.list /etc/apt/sources.list
+COPY sources.list /etc/apt/sources.list
 
 # Update and get dependencies
 RUN apt-get update
@@ -67,7 +67,7 @@ COPY root/etc/services.d/plex/run /etc/services.d/plex/run
 # Save version and install
 #RUN /installBinary.sh
 #RUN axel -n5 -S5 "${PLEX_DOWNLOAD}/${PLEX_RELEASE}/debian/plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb" -o /tmp/plexmediaserver.deb
-FROM multiarch/ubuntu-debootstrap:armhf-bionic AS install
+#FROM multiarch/ubuntu-debootstrap:armhf-bionic AS install
 
 COPY plexmediaserver_${PLEX_RELEASE}_${ARCH}.deb /tmp/plexmediaserver.deb
 RUN  uname -a
