@@ -1,4 +1,4 @@
-FROM --platform=linux/armv7 ubuntu:18.04
+FROM --platform=linux/arm ubuntu:18.04
 
 COPY qemu-arm-static /usr/bin
 
