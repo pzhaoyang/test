@@ -1,4 +1,5 @@
-FROM --platform=linux/arm/v7 ubuntu:18.04
+#FROM --platform=linux/arm/v7 ubuntu:18.04
+FROM ubuntu@sha256:3b029ac9aa8eb5dffd43bb7326891cf64f9c228b3960cec55a56605d2ae2ad42
 
 COPY qemu-arm-static /usr/bin
 
